@@ -44,11 +44,11 @@ def main(args):
         for res in pool.imap_unordered(worker_task, [(d, args.steps, fn) for _ in range(walk_count)]):
             records.append(res)
     ## Plot
-    distance_plot(records, "l1", d, walk_count)
-    distance_plot(records, "l2", d, walk_count)
-    back_to_zero_count(records, d, walk_count)
+    distance_plot(records, "l1", d, walk_count, args.steps)
+    distance_plot(records, "l2", d, walk_count, args.steps)
+    back_to_zero_count(records, d, walk_count, args.steps)
     ## Save the records
-    with open(f"dim-{d}_walks-{walk_count}.jsonl", "w") as f:
+    with open(f"dim-{d}_walks-{walk_count}_steps-{args.steps}.jsonl", "w") as f:
         for record in records:
             record["last_x"] = record["last_x"].tolist()
             f.write(json.dumps(record) + "\n")
